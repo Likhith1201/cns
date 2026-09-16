@@ -1,0 +1,36 @@
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter text: ");
+        String text = sc.nextLine();
+        // Encryption
+        String cipher = "";
+        for (int i = 0; i < text.length(); i += 2)
+            cipher += text.charAt(i);
+        for (int i = 1; i < text.length(); i += 2)
+            cipher += text.charAt(i);
+        System.out.println("Encrypted: " + cipher);
+        // Decryption
+        String plain = "";
+        int n = text.length();
+        int k = 0;
+        for (int i = 0; i < (n + 1) / 2; i++)
+            plain += cipher.charAt(k++);
+        for (int i = 0; i < n / 2; i++)
+            plain += cipher.charAt(k++);
+        // Arrange characters alternately
+        String result = "";
+
+        for (int i = 0; i < (n + 1) / 2; i++) {
+            result += plain.charAt(i);
+
+            if (i < n / 2)
+                result += plain.charAt((n + 1) / 2 + i);
+        }
+
+        System.out.println("Decrypted: " + result);
+
+        sc.close();
+    }
+}

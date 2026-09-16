@@ -1,0 +1,36 @@
+import java.math.BigInteger;
+import java.util.Scanner;
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        // Input prime numbers
+        System.out.print("Enter p: ");
+        BigInteger p = sc.nextBigInteger();
+        System.out.print("Enter q: ");
+        BigInteger q = sc.nextBigInteger();
+        // Calculate n
+        BigInteger n = p.multiply(q);
+        // Calculate phi
+        BigInteger phi = p.subtract(BigInteger.ONE)
+                           .multiply(q.subtract(BigInteger.ONE));
+        // Input e
+        System.out.print("Enter e: ");
+        BigInteger e = sc.nextBigInteger();
+        // Calculate d
+        BigInteger d = e.modInverse(phi);
+        // Input message
+        System.out.print("Enter message: ");
+        BigInteger m = sc.nextBigInteger();
+        // Encryption
+        BigInteger encrypted = m.modPow(e, n);
+        // Decryption
+        BigInteger decrypted = encrypted.modPow(d, n);
+        System.out.println("\nn = " + n);
+        System.out.println("phi = " + phi);
+        System.out.println("Public Key = (" + e + ", " + n + ")");
+        System.out.println("Private Key = (" + d + ", " + n + ")");
+        System.out.println("Encrypted Message = " + encrypted);
+        System.out.println("Decrypted Message = " + decrypted);
+        sc.close();
+    }
+}

@@ -1,0 +1,29 @@
+import java.util.Scanner;
+public class SubCipher{
+    public static void main(String[] args){
+        Scanner sc = new Scanner (System.in);
+        
+        String a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+        String b = "zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA ";
+        
+        System.out.println("Enter any String:");
+        String str = sc.nextLine();
+        
+        String encrypt="";
+        String decrypt="";
+        
+        for (int i = 0; i<str.length();i++){
+            char c = str.charAt(i);
+            int j = a.indexOf(c);
+            encrypt += b.charAt(j);
+        }
+        System.out.println("Encrypted String is: " + encrypt);
+        for (int i = 0; i<encrypt.length();i++){
+            char c = encrypt.charAt(i);
+            int j = a.indexOf(c);
+            decrypt += b.charAt(j);
+        }
+        System.out.println("Decrypted String is: " + decrypt);
+    }
+
+}    

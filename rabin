@@ -1,0 +1,71 @@
+import java.util.*;
+
+public class Main {
+
+    static long power(long a, long m, long n) {
+        long T = 1;
+        while (m > 0) {
+            if (m % 2 == 1)
+                T = (T * a) % n;
+
+            a = (a * a) % n;
+            m = m / 2;
+        }
+        return T;
+    }
+
+    static boolean millerRabin(int n, int a) {
+
+        if (n < 2)
+            return false;
+
+        if (n == 2 || n == 3)
+            return true;
+
+        // Find m and k such that n-1 = m * 2^k
+        int m = n - 1;
+        int k = 0;
+
+        while (m % 2 == 0) {
+            m = m / 2;
+            k++;
+        }
+
+        // T = a^m mod n
+        long T = power(a, m, n);
+
+        // If T = +1 or -1, prime for this test
+        if (T == 1 || T == n - 1)
+            return true;
+
+        // Repeat k-1 times
+        for (int i = 1; i < k; i++) {
+
+            T = (T * T) % n;
+
+            if (T == n - 1)
+                return true;
+
+            if (T == 1)
+                return false;
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter n: ");
+        int n = sc.nextInt();
+
+        System.out.print("Enter a: ");
+        int a = sc.nextInt();
+
+        if (millerRabin(n, a))
+            System.out.println("Prime");
+        else
+            System.out.println("Composite");
+    }
+}

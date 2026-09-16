@@ -1,0 +1,85 @@
+import java.util.*;
+public class HillCipher {
+    static int[][] key = {{3, 3}, {2, 5}};
+    static int[][] inverseKey = new int[2][2];
+
+    // Find modular inverse
+    static int modInverse(int det) {
+        det = (det % 26 + 26) % 26;
+        for (int i = 1; i < 26; i++) {
+            if ((det * i) % 26 == 1)
+                return i;
+        }
+        return -1;
+    }
+
+    // Find inverse key matrix
+    static void findInverse() {
+        int det = (key[0][0]*key[1][1] - key[0][1]*key[1][0]) % 26;
+        if (det < 0) det += 26;
+
+        int invDet = modInverse(det);
+
+        inverseKey[0][0] = ( key[1][1] * invDet) % 26;
+        inverseKey[1][1] = ( key[0][0] * invDet) % 26;
+        inverseKey[0][1] = (-key[0][1] * invDet) % 26;
+        inverseKey[1][0] = (-key[1][0] * invDet) % 26;
+
+        for (int i = 0; i < 2; i++)
+            for (int j = 0; j < 2; j++)
+                inverseKey[i][j] = (inverseKey[i][j] + 26) % 26;
+    }
+
+    // Encryption
+    static String encrypt(String msg) {
+        msg = msg.toUpperCase();
+        if (msg.length() % 2 != 0)
+            msg += "X";
+
+        String result = "";
+
+        for (int i = 0; i < msg.length(); i += 2) {
+            int a = msg.charAt(i) - 'A';
+            int b = msg.charAt(i+1) - 'A';
+
+            int x = (key[0][0]*a + key[0][1]*b) % 26;
+            int y = (key[1][0]*a + key[1][1]*b) % 26;
+
+            result += (char)(x + 'A');
+            result += (char)(y + 'A');
+        }
+        return result;
+    }
+
+    // Decryption
+    static String decrypt(String cipher) {
+        String result = "";
+
+        for (int i = 0; i < cipher.length(); i += 2) {
+            int a = cipher.charAt(i) - 'A';
+            int b = cipher.charAt(i+1) - 'A';
+
+            int x = (inverseKey[0][0]*a + inverseKey[0][1]*b) % 26;
+            int y = (inverseKey[1][0]*a + inverseKey[1][1]*b) % 26;
+
+            result += (char)(x + 'A');
+            result += (char)(y + 'A');
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        findInverse();
+
+        System.out.print("Enter message: ");
+        String msg = sc.nextLine();
+
+        String cipher = encrypt(msg);
+        System.out.println("Encrypted: " + cipher);
+
+        String plain = decrypt(cipher);
+        System.out.println("Decrypted: " + plain);
+    }
+}

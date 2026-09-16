@@ -1,0 +1,30 @@
+import java.util.Scanner;
+public class Main
+{
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter a: ");
+		int a = sc.nextInt();
+		System.out.print("Enter b: ");
+		int b= sc.nextInt();
+		if (b > a){
+		    int temp =a;
+		    a=b;
+		    b=temp;
+		}
+		System.out.println("Dividend divisor quotient remainder ");
+		
+		//System.out.println(a +"\t\t"+ b +"\t\t" + q +"\t\t" + r );
+		while(b!= 0){
+		    int q = a/b;
+		    int r = a%b;
+		    System.out.println(a +"\t"+ b +"\t" + q +"\t" + r );
+		    a = b;
+		    b = r;
+		}
+		if(b==0){
+		    System.out.println(a +"\t" + b);
+		}
+		System.out.println("GCD =" + a);
+	}
+}

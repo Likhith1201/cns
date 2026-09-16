@@ -1,0 +1,22 @@
+import java.util.Scanner;
+public class Main {
+public static void main(String[] args) { 
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Enter prime number p: "); 
+    long p = sc.nextLong();
+    System.out.print("Enter primitive root g: "); 
+    long g = sc.nextLong();
+    System.out.print("Enter Alice's private key: "); 
+    long a= sc.nextLong();
+    System.out.print("Enter Bob's private key: "); 
+    long b = sc.nextLong();
+    long A =(long) Math.pow(g, a) % p; 
+    long B = (long) Math.pow(g, b) % p;
+    long keyA = (long) Math.pow(B, a) % p; 
+    long keyB = (long) Math.pow(A, b) % p;
+    System.out.println("Alice's public key: "+ A);
+System.out.println("Bob's public key: "+ B);
+System.out.println("Alice's shared key: " + keyA);
+System.out.println("Bob's shared key: "+ keyB);
+}
+}

@@ -1,0 +1,24 @@
+import java.util.Scanner;
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner (System.in);
+        System.out.println("Enter Cipher Text: ");
+        String cipher = sc.nextLine();
+        String plain = "";
+        for (int i =0; i<26; i++){
+            plain ="";
+            for (int j =0; j< cipher.length(); j++){
+                if(cipher.charAt(j) != ' ')
+                    plain += (char)(((cipher.charAt(j)-i-'a'+26)%26)+'a');
+                else
+                    plain += " ";
+            }
+            System.out.println("Plain text with key " +i + " is:" +plain);
+            System.out.println("Is a valid plain text:(Y/N)");
+            char valid = sc.next().charAt(0);
+            if(valid == 'Y' || valid == 'y')
+                break;
+        }
+        System.out.println("Actual plain Text is : "+plain);
+    }
+}
